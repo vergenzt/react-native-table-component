@@ -10,7 +10,7 @@ export class Row extends Component {
   };
 
   render() {
-    const { data, style, widthArr, height, flexArr, textStyle, ...props } = this.props;
+    const { data, style, widthArr, height, flexArr, textStyle, textStyleArr, ...props } = this.props;
     let width = widthArr ? sum(widthArr) : 0;
 
     return data ? (
@@ -18,7 +18,8 @@ export class Row extends Component {
         {data.map((item, i) => {
           const flex = flexArr && flexArr[i];
           const wth = widthArr && widthArr[i];
-          return <Cell key={i} data={item} width={wth} height={height} flex={flex} textStyle={textStyle} {...props} />;
+          const cellTextStyle = [textStyle, textStyleArr && textStyleArr[i]];
+          return <Cell key={i} data={item} width={wth} height={height} flex={flex} textStyle={cellTextStyle} {...props} />;
         })}
       </View>
     ) : null;
@@ -32,7 +33,7 @@ export class Rows extends Component {
   };
 
   render() {
-    const { data, style, widthArr, heightArr, flexArr, textStyle, ...props } = this.props;
+    const { data, style, widthArr, heightArr, flexArr, textStyle, textStyleArr, ...props } = this.props;
     const flex = flexArr ? sum(flexArr) : 0;
     const width = widthArr ? sum(widthArr) : 0;
 
@@ -40,6 +41,7 @@ export class Rows extends Component {
       <View style={[flex && { flex }, width && { width }]}>
         {data.map((item, i) => {
           const height = heightArr && heightArr[i];
+          const rowTextStyle = [textStyle, textStyleArr && textStyleArr[i]];
           return (
             <Row
               key={i}
@@ -49,6 +51,7 @@ export class Rows extends Component {
               flexArr={flexArr}
               style={style}
               textStyle={textStyle}
+              textStyleArr={rowTextStyle}
               {...props}
             />
           );
